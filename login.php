@@ -57,8 +57,10 @@
             $query = "INSERT INTO `usuarios` (`id`, `usuario`, `email`, `senha`) VALUES (NULL, '$usuario', '$email', '$senha')";
             $data = $banco -> query($query) or die ("falha na execução do codigo");
             if($data){
-                setcookie("login", $email);
-                header("Location: painel.php");
+                if(!isset($_SESSION)){
+                    session_start();
+                }
+                echo "<h2>Conta criada com sucesso!</h2>";  
             }
             else{
                 echo'<h3>Erro ao registrar</h3>';
@@ -84,16 +86,16 @@
 
         <div class="login">
             <form class="form" method="POST">
-                <label for="chk" aria-hidden="true">Log in</label>
+                <label for="chk" aria-hidden="true">Entrar</label>
                 <input class="input" type="email" name="email" placeholder="Email" required="">
-                <input class="input" type="password" name="senha" placeholder="Password" required="">
+                <input class="input" type="password" name="senha" placeholder="Senha" required="">
                 <input type="submit" value="Entrar" name="entrar">
             </form>
         </div>
 
         <div class="register">
             <form class="form" method="POST">
-                <label for="chk" aria-hidden="true">Register</label>
+                <label for="chk" aria-hidden="true">Cadastrar</label>
                 <input class="input" type="text" name="usuario" placeholder="Usuario" required="">
                 <input class="input" type="email" name="email" placeholder="Email" required="">
                 <input class="input" type="password" name="senha" placeholder="Senha" required="">
